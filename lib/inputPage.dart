@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:myBmi/resultsPage.dart';
 
 import 'helper/constants.dart';
 import 'helper/iconContent.dart';
@@ -208,18 +209,25 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('CALCULATE')
-              ],
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return ResultsPage();
+                }),
+              );
+            },
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('CALCULATE')],
+              ),
+              height: 50,
+              margin: EdgeInsets.only(top: 10),
+              width: double.infinity,
+              color: bottomContainerColor,
             ),
-            height: 50,
-            margin: EdgeInsets.only(top: 10),
-            width: double.infinity,
-            color: bottomContainerColor,
           ),
         ],
       ),
