@@ -6,14 +6,18 @@ import 'inputPage.dart';
 // void main() => runApp(BMICalculator());
 
 void main() {
- WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-    .then((_) {
-      runApp(new BMICalculator());
-    });
+      .then((_) {
+    runApp(new BMICalculator());
+  });
 }
 
 class BMICalculator extends StatelessWidget {
+  void m() {
+    print('object');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
