@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:myBmi/resultsPage.dart';
-
-import 'helper/constants.dart';
-import 'helper/iconContent.dart';
-import 'helper/resuableCard.dart';
+import 'package:myBmi/helper/BottomButton.dart';
+import 'package:myBmi/helper/CalculatorBrain.dart';
+import 'package:myBmi/helper/RoundIconButton.dart';
+import 'package:myBmi/helper/constants.dart';
+import 'package:myBmi/helper/iconContent.dart';
+import 'package:myBmi/helper/resuableCard.dart';
+import 'package:myBmi/screens/resultsPage.dart';
 
 enum Gender { male, female }
 
@@ -40,8 +42,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     color: selectedGender == Gender.male
-                        ? activeCardColor
-                        : inactiveCardColor,
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
                     cardChild: IconContents(
                       icon: FontAwesomeIcons.mars,
                       label: 'MALE',
@@ -56,8 +58,8 @@ class _InputPageState extends State<InputPage> {
                       });
                     },
                     color: selectedGender == Gender.female
-                        ? activeCardColor
-                        : inactiveCardColor,
+                        ? kActiveCardColor
+                        : kInactiveCardColor,
                     cardChild: IconContents(
                       icon: FontAwesomeIcons.venus,
                       label: 'FEMALE',
@@ -69,13 +71,13 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableCard(
-              color: activeCardColor,
+              color: kActiveCardColor,
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'HEIGHT',
-                    style: labelStyleText,
+                    style: kLabelStyleText,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -84,11 +86,11 @@ class _InputPageState extends State<InputPage> {
                     children: [
                       Text(
                         height.toString(),
-                        style: textSize,
+                        style: kTextSize,
                       ),
                       Text(
                         'cm',
-                        style: labelStyleText,
+                        style: kLabelStyleText,
                       ),
                     ],
                   ),
@@ -130,11 +132,11 @@ class _InputPageState extends State<InputPage> {
                       children: [
                         Text(
                           'WEIGHT',
-                          style: labelStyleText,
+                          style: kLabelStyleText,
                         ),
                         Text(
                           weight.toString(),
-                          style: textSize,
+                          style: kTextSize,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -172,11 +174,11 @@ class _InputPageState extends State<InputPage> {
                       children: [
                         Text(
                           'AGE',
-                          style: labelStyleText,
+                          style: kLabelStyleText,
                         ),
                         Text(
                           age.toString(),
-                          style: textSize,
+                          style: kTextSize,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -209,48 +211,29 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          GestureDetector(
+          BottomWidget(
+            ButtonTitle: 'CALCULATE',
             onTap: () {
+              CalculatorBrain calculatorBrain = CalculatorBrain(
+                height: height,
+                weight: weight,
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) {
-                  return ResultsPage();
-                }),
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ResultsPage(
+                      bmiResult: calculatorBrain.calculateBMI(),
+                      interpretation: calculatorBrain.getInterpretation(),
+                      resultText: calculatorBrain.getResult(),
+                    );
+                  },
+                ),
               );
             },
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('CALCULATE')],
-              ),
-              height: 50,
-              margin: EdgeInsets.only(top: 10),
-              width: double.infinity,
-              color: bottomContainerColor,
-            ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  final IconData iconData;
-  final Function onPress;
-  RoundIconButton({this.iconData, this.onPress});
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(iconData),
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      shape: CircleBorder(),
-      elevation: 0,
-      fillColor: Color(0xFF4C4F5E),
-      onPressed: onPress,
     );
   }
 }
