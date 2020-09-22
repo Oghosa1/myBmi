@@ -211,6 +211,7 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
+          
           BottomWidget(
             ButtonTitle: 'CALCULATE',
             onTap: () {
