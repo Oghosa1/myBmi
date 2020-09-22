@@ -131,7 +131,7 @@ class _InputPageState extends State<InputPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'WEIGHT',
+                          'WEIGHT (kg)',
                           style: kLabelStyleText,
                         ),
                         Text(
@@ -211,7 +211,7 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          
+
           BottomWidget(
             ButtonTitle: 'CALCULATE',
             onTap: () {
